@@ -1,4 +1,4 @@
-import datetime, logging
+import datetime, logging, json
 from hashlib import sha256
 
 logging.basicConfig(format='[%(asctime)s][%(levelname)s] %(message)s', datefmt='%H:%M:%S', level=logging.INFO)
@@ -10,7 +10,7 @@ def unixtime():
 
 
 def calculate_hash(index, previous_hash, timestamp, data):
-    bstring = ''.join([str(x) for x in [index, previous_hash, timestamp, data]]).encode()
+    bstring = json.dumps([index, previous_hash, timestamp, data]).encode()
     sha256_hash = sha256(bstring).hexdigest()
     logging.debug('calculate_hash(%s, %s, %s, %s) => sha256(%s) => %s', index, previous_hash, timestamp, data, bstring,
                   sha256_hash)
