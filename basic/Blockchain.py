@@ -79,7 +79,7 @@ class Chain:
             else:
                 # Only one block to check
                 block = self.chain[from_index]
-                return calculate_hash(block.index, block.previous_hash, block.timestamp, block.data) is block.hash
+                return calculate_hash(block.index, block.previous_hash, block.timestamp, block.data) == block.hash
 
         if from_index == 0:
             # We can skip ahead if 0 is selected, integrity is checked anyway when it is former_block
@@ -103,7 +103,7 @@ logging.info('Blockchain initiated with genesis block')
 logging.debug('Initiated blockchain, genesis = [%s, %s, %s, %s] [%s]', genesis_block.index, genesis_block.previous_hash,
               genesis_block.timestamp, genesis_block.data, genesis_block.hash)
 
-for i in range(1, 200000):
+for i in range(1, 10):
     new_block = blockchain.generate_new_block('Block number {}'.format(i))
     # logging.info('Add: {prev} => {hash}'.format(prev=new_block.previous_hash, hash=new_block.hash))
     blockchain.add_block(new_block)
