@@ -116,7 +116,7 @@ if blockchain.valid_block_chain():
 import random, uuid
 
 random_block = random.choice(blockchain.chain)
-logging.info('Corrupting data for random block #{index}'.format(index=random_block.index))
+logging.info('Corrupting data for random block #%s', random_block.index)
 random_block.data = str(uuid.uuid4())
 logging.info('Checking integrity..')
 if blockchain.valid_block_chain():
