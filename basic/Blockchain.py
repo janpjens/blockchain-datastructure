@@ -97,27 +97,28 @@ class Chain:
         return True
 
 
-genesis_block = Block(0, None, unixtime(), 'The first block in this chain!')
-blockchain = Chain(genesis_block)
-logging.info('Blockchain initiated with genesis block')
-logging.debug('Initiated blockchain, genesis = [%s, %s, %s, %s] [%s]', genesis_block.index, genesis_block.previous_hash,
-              genesis_block.timestamp, genesis_block.data, genesis_block.hash)
+if __name__ == '__main__':
+    genesis_block = Block(0, None, unixtime(), 'The first block in this chain!')
+    blockchain = Chain(genesis_block)
+    logging.info('Blockchain initiated with genesis block')
+    logging.debug('Initiated blockchain, genesis = [%s, %s, %s, %s] [%s]', genesis_block.index, genesis_block.previous_hash,
+                  genesis_block.timestamp, genesis_block.data, genesis_block.hash)
 
-for i in range(1, 10):
-    new_block = blockchain.generate_new_block('Block number {}'.format(i))
-    # logging.info('Add: {prev} => {hash}'.format(prev=new_block.previous_hash, hash=new_block.hash))
-    blockchain.add_block(new_block)
+    for i in range(1, 10):
+        new_block = blockchain.generate_new_block('Block number {}'.format(i))
+        # logging.info('Add: {prev} => {hash}'.format(prev=new_block.previous_hash, hash=new_block.hash))
+        blockchain.add_block(new_block)
 
-logging.info('Blocks have been added, now %s blocks on blockchain', len(blockchain.chain))
-logging.info('Checking integrity..')
-if blockchain.valid_block_chain():
-    logging.info('Integrity is ok!')
+    logging.info('Blocks have been added, now %s blocks on blockchain', len(blockchain.chain))
+    logging.info('Checking integrity..')
+    if blockchain.valid_block_chain():
+        logging.info('Integrity is ok!')
 
-import random, uuid
+    import random, uuid
 
-random_block = random.choice(blockchain.chain)
-logging.info('Corrupting data for random block #%s', random_block.index)
-random_block.data = str(uuid.uuid4())
-logging.info('Checking integrity..')
-if blockchain.valid_block_chain():
-    logging.info('Integrity is ok!')
+    random_block = random.choice(blockchain.chain)
+    logging.info('Corrupting data for random block #%s', random_block.index)
+    random_block.data = str(uuid.uuid4())
+    logging.info('Checking integrity..')
+    if blockchain.valid_block_chain():
+        logging.info('Integrity is ok!')
